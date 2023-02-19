@@ -47,4 +47,3 @@ def test_43508762866_is_a_valid_cpf():
 
 def test_89450654823_is_an_invalid_cpf():
     assert check_cpf("89450654823") is False
-    
