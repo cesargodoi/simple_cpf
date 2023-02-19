@@ -1,4 +1,8 @@
-from .check_cpf import check_cpf
+import re
+
+from .check_cpf import check_cpf, generate_cpf, formated_cpf
+
+CPF_REGEX = re.compile(r"^\d{3}.\d{3}.\d{3}-\d{2}$")
 
 
 def test_emptyvalue_is_an_invalid_cpf():
@@ -47,3 +51,18 @@ def test_43508762866_is_a_valid_cpf():
 
 def test_89450654823_is_an_invalid_cpf():
     assert check_cpf("89450654823") is False
+
+
+def test_formated_cpf():
+    cpf = formated_cpf()
+    assert CPF_REGEX.findall(cpf)[0] == cpf
+
+
+def test_formated_cpf_by_number():
+    cpf = formated_cpf("03840786568")
+    assert CPF_REGEX.findall(cpf)[0] == cpf
+
+
+def test_formated_cpf_by_formated_number():
+    cpf = formated_cpf("038.407.865-68")
+    assert CPF_REGEX.findall(cpf)[0] == cpf

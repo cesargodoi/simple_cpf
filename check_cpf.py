@@ -1,4 +1,5 @@
 import re
+from random import randint
 
 
 def calc_digit(num):
@@ -26,3 +27,22 @@ def check_cpf(number):
         return False
 
     return True
+
+
+def generate_cpf():
+    numbers = [randint(0, 9) for i in range(9)]
+    for _ in range(2):
+        numbers.append(calc_digit(numbers))
+    return "".join([str(n) for n in numbers])
+
+
+def formated_cpf(number=False):
+    if number:
+        if check_cpf(number):
+            _cpf = [int(n) for n in re.findall(r"\d", number)]
+            cpf = "".join([str(n) for n in _cpf])
+        else:
+            return "Enter a valid CPF"
+    else:
+        cpf = generate_cpf()
+    return f"{cpf[0:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:11]}"
